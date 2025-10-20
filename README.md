@@ -49,17 +49,29 @@ Veridia is a single-page front-end application that implements an end-to-end int
 
 ## Login Credentials for testing:
 HR Login Credentials
+
 • Email: hr@veridia.com
+
 • Password: hr123
+
 • Name: HR Admin
+
 • Role: HR
+
 Purpose: Gives access to the HR Dashboard, where you can view, filter, and manage all applications.
+
 Test Applicant Login Credentials
+
 • Email: applicant@test.com
+
 • Password: test123
+
 • Name: Test Applicant
+
 • Role: Applicant
+
 Purpose: Logs into the Applicant Dashboard, where you can view and track your submitted applications.
+
 
 ## Screenshots Included
 Placed in `assets/screenshots/` folder:
@@ -86,4 +98,5 @@ Placed in `assets/screenshots/` folder:
 Developer: Krishna Pandey  
 Internship: Veridia Internship Program  
 Date: October 20, 2025
+
 
