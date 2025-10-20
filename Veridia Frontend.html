@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veridia Internship Hiring Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        * {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        :root {
+            --color-primary: #2596be;
+            --color-secondary: #7828c3;
+            --color-accent: #8c3ee6;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #2596be 0%, #7828c3 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #2596be 0%, #7828c3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: 2px solid #7828c3;
+            outline-offset: 2px;
+        }
+        .tag-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            min-height: 3rem;
+        }
+        .skill-chip {
+            background: linear-gradient(90deg, #a491ff 0%, #e9d4fa 100%);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .modal-backdrop {
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(4px);
+        }
+        .toast {
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation -->
+    <header id="main_header" class="fixed top-0 w-full z-50 glass-card shadow-sm">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg gradient-bg flex items-center justify-center text-white font-bold text-xl">V</div>
+                <span class="text-xl font-bold gradient-text">Veridia</span>
+            </div>
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#hero_section" class="hover:text-purple-700 transition">Hero</a>
+                <a href="#about_section" class="hover:text-purple-700 transition">About</a>
+                <a href="#apply_section" class="hover:text-purple-700 transition">Apply</a>
+                <a href="#features_section" class="hover:text-purple-700 transition">Features</a>
+                <a href="#applicant_dashboard" class="hover:text-purple-700 transition">Applicant Dashboard</a>
+                <a href="#hr_dashboard" class="hover:text-purple-700 transition">HR Dashboard</a>
+                <a href="#contact_section" class="hover:text-purple-700 transition">Contact</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="login_button" class="px-4 py-2 text-sm font-medium hover:bg-gray-100 rounded-lg transition" aria-label="Login">Login</button>
+                <button id="register_button" class="px-4 py-2 text-sm font-medium text-white gradient-bg rounded-lg hover:opacity-90 transition" aria-label="Register">Register</button>
+            </div>
+            <button id="mobile_menu_toggle" class="md:hidden p-2" aria-label="Toggle menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero_section" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="floating_shapes">
+            <div class="shape w-64 h-64 bg-purple-400 top-10 left-10" style="animation-delay: 0s;"></div>
+            <div class="shape w-96 h-96 bg-blue-400 bottom-20 right-20" style="animation-delay: 5s;"></div>
+            <div class="shape w-48 h-48 bg-pink-300 top-1/2 left-1/3" style="animation-delay: 10s;"></div>
+        </div>
+        <div class="container mx-auto px-4 z-10 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Join Veridia — Where <span class="gradient-text">Innovation</span> Meets <span class="gradient-text">Purpose</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl mx-auto">
+                    Shape the future of technology. Build meaningful products. Grow with a team that values your potential.
+                </p>
+                <button id="hero_apply_button" class="px-8 py-4 text-lg font-semibold text-white gradient-bg rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition" aria-label="Apply Now">
+                    Apply Now →
+                </button>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 mt-20">
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2">50+</div>
+                    <div class="text-gray-600">Talented Interns</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2">15+</div>
+                    <div class="text-gray-600">Exciting Projects</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2">98%</div>
+                    <div class="text-gray-600">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about_section" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-6 gradient-text">About Our Internship Program</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    At Veridia, we believe in nurturing the next generation of innovators. Our internship program offers hands-on experience with cutting-edge technologies, mentorship from industry experts, and the opportunity to work on real-world projects that make an impact.
+                </p>
+                <div class="bg-purple-50 border-l-4 border-purple-700 p-6 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold mb-3 text-purple-900">Why We Built This Platform</h3>
+                    <p class="text-gray-700">
+                        Traditional application processes using Google Forms are limiting. We needed a comprehensive solution that streamlines applications, enables better candidate tracking, provides detailed analytics, and creates a seamless experience for both applicants and our HR team. This platform replaces fragmented workflows with an integrated, efficient system.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-xl">
+                        <h4 class="text-xl font-semibold mb-3">For Applicants</h4>
+                        <ul class="space-y-2 text-gray-700">
+                            <li>✓ Easy application process with auto-save</li>
+                            <li>✓ Real-time status tracking</li>
+                            <li>✓ Direct communication with HR</li>
+                            <li>✓ Profile management</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl">
+                        <h4 class="text-xl font-semibold mb-3">For HR Team</h4>
+                        <ul class="space-y-2 text-gray-700">
+                            <li>✓ Centralized candidate management</li>
+                            <li>✓ Advanced filtering and search</li>
+                            <li>✓ Automated email notifications</li>
+                            <li>✓ Analytics and reporting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features_section" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text">Platform Features</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <article class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition">
+                    <div class="w-16 h-16 rounded-xl gradient-bg flex items-center justify-center text-white text-2xl mb-4">📝</div>
+                    <h3 class="text-xl font-semibold mb-3">Smart Application Form</h3>
+                    <p class="text-gray-600">Multi-step form with auto-save, file uploads, and intelligent validation to make applying effortless.</p>
+                </article>
+                <article class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition">
+                    <div class="w-16 h-16 rounded-xl gradient-bg flex items-center justify-center text-white text-2xl mb-4">👤</div>
+                    <h3 class="text-xl font-semibold mb-3">Applicant Dashboard</h3>
+                    <p class="text-gray-600">Track your application status, update your profile, and communicate directly with our HR team.</p>
+                </article>
+                <article class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition">
+                    <div class="w-16 h-16 rounded-xl gradient-bg flex items-center justify-center text-white text-2xl mb-4">🎯</div>
+                    <h3 class="text-xl font-semibold mb-3">HR Dashboard</h3>
+                    <p class="text-gray-600">Comprehensive candidate management with filtering, bulk actions, and detailed analytics.</p>
+                </article>
+                <article class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition">
+                    <div class="w-16 h-16 rounded-xl gradient-bg flex items-center justify-center text-white text-2xl mb-4">📧</div>
+                    <h3 class="text-xl font-semibold mb-3">Email Notifications</h3>
+                    <p class="text-gray-600">Automated status updates and customizable templates keep everyone informed.</p>
+                </article>
+                <article class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition">
+                    <div class="w-16 h-16 rounded-xl gradient-bg flex items-center justify-center text-white text-2xl mb-4">📊</div>
+                    <h3 class="text-xl font-semibold mb-3">Analytics & Reporting</h3>
+                    <p class="text-gray-600">Gain insights with visual analytics, source tracking, and performance metrics.</p>
+                </article>
+                <article class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition">
+                    <div class="w-16 h-16 rounded-xl gradient-bg flex items-center justify-center text-white text-2xl mb-4">💾</div>
+                    <h3 class="text-xl font-semibold mb-3">Data Export</h3>
+                    <p class="text-gray-600">Export candidate data to CSV for further analysis and record keeping.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form Section -->
+    <section id="apply_section" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 gradient-text">Apply Now</h2>
+                <p class="text-center text-gray-600 mb-12">Join our team of innovators. Your journey starts here.</p>
+                
+                <!-- Progress Bar -->
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span id="progress_label" class="text-sm font-medium text-gray-700">Step 1 of 3: Personal Details</span>
+                        <span id="progress_percent" class="text-sm font-medium text-purple-700">33%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="progress_bar" class="gradient-bg h-2 rounded-full transition-all duration-300" style="width: 33%"></div>
+                    </div>
+                </div>
+
+                <form id="application_form" class="bg-white p-8 rounded-2xl shadow-lg">
+                    <!-- Step 1: Personal Details -->
+                    <div id="form_step_personal" class="form-step">
+                        <h3 class="text-2xl font-semibold mb-6">Personal Details</h3>
+                        
+                        <div class="mb-4">
+                            <label for="full_name" class="block text-sm font-medium mb-2">Full Name *</label>
+                            <input type="text" id="full_name" name="full_name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" aria-required="true">
+                            <span class="error-message text-red-600 text-sm hidden"></span>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-2">Email *</label>
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" aria-required="true">
+                                <span class="error-message text-red-600 text-sm hidden"></span>
+                            </div>
+                            <div>
+                                <label for="phone_number" class="block text-sm font-medium mb-2">Phone Number *</label>
+                                <input type="tel" id="phone_number" name="phone_number" required pattern="[0-9]{10}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" aria-required="true">
+                                <span class="error-message text-red-600 text-sm hidden"></span>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="current_location" class="block text-sm font-medium mb-2">Current Location</label>
+                                <input type="text" id="current_location" name="current_location" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label for="preferred_location" class="block text-sm font-medium mb-2">Preferred Work Mode</label>
+                                <select id="preferred_location" name="preferred_location" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                                    <option value="remote">Remote</option>
+                                    <option value="hybrid">Hybrid</option>
+                                    <option value="onsite">Onsite</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="linkedin_url" class="block text-sm font-medium mb-2">LinkedIn Profile</label>
+                                <input type="url" id="linkedin_url" name="linkedin_url" placeholder="https://linkedin.com/in/yourprofile" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label for="portfolio_url" class="block text-sm font-medium mb-2">Portfolio URL</label>
+                                <input type="url" id="portfolio_url" name="portfolio_url" placeholder="https://yourportfolio.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="profile_picture" class="block text-sm font-medium mb-2">Profile Picture</label>
+                            <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            <div id="profile_picture_preview" class="mt-2 hidden">
+                                <img src="" alt="Profile preview" class="w-32 h-32 object-cover rounded-lg">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end gap-3 mt-6">
+                            <button type="button" class="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" onclick="save_draft()">Save Draft</button>
+                            <button type="button" class="px-6 py-2 text-white gradient-bg rounded-lg hover:opacity-90 transition" onclick="next_step()">Next Step →</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Education & Skills -->
+                    <div id="form_step_education" class="form-step hidden">
+                        <h3 class="text-2xl font-semibold mb-6">Education & Skills</h3>
+
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="highest_qualification" class="block text-sm font-medium mb-2">Highest Qualification *</label>
+                                <select id="highest_qualification" name="highest_qualification" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" aria-required="true">
+                                    <option value="">Select...</option>
+                                    <option value="high_school">High School</option>
+                                    <option value="bachelors">Bachelor's Degree</option>
+                                    <option value="masters">Master's Degree</option>
+                                    <option value="phd">PhD</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="graduation_year" class="block text-sm font-medium mb-2">Graduation Year</label>
+                                <select id="graduation_year" name="graduation_year" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                                    <option value="">Select...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="institution_name" class="block text-sm font-medium mb-2">Institution Name</label>
+                                <input type="text" id="institution_name" name="institution_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label for="cgpa_percentage" class="block text-sm font-medium mb-2">CGPA/Percentage</label>
+                                <input type="text" id="cgpa_percentage" name="cgpa_percentage" placeholder="e.g., 8.5 or 85%" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Skills (Press Enter to add)</label>
+                            <div class="tag-input" id="skills_container">
+                                <input type="text" id="skills_input" placeholder="Type a skill and press Enter" class="flex-1 min-w-[200px] outline-none border-none">
+                            </div>
+                            <input type="hidden" id="skills" name="skills">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Primary Tech Stack</label>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="primary_tech_stack" value="javascript" class="w-4 h-4 text-purple-600 focus:ring-2 focus:ring-purple-500">
+                                    <span class="text-sm">JavaScript</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="primary_tech_stack" value="python" class="w-4 h-4 text-purple-600 focus:ring-2 focus:ring-purple-500">
+                                    <span class="text-sm">Python</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="primary_tech_stack" value="java" class="w-4 h-4 text-purple-600 focus:ring-2 focus:ring-purple-500">
+                                    <span class="text-sm">Java</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="primary_tech_stack" value="react" class="w-4 h-4 text-purple-600 focus:ring-2 focus:ring-purple-500">
+                                    <span class="text-sm">React</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="primary_tech_stack" value="nodejs" class="w-4 h-4 text-purple-600 focus:ring-2 focus:ring-purple-500">
+                                    <span class="text-sm">Node.js</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="primary_tech_stack" value="cpp" class="w-4 h-4 text-purple-600 focus:ring-2 focus:ring-purple-500">
+                                    <span class="text-sm">C++</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="github_url" class="block text-sm font-medium mb-2">GitHub Profile</label>
+                            <input type="url" id="github_url" name="github_url" placeholder="https://github.com/yourusername" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        </div>
+
+                        <div class="flex justify-between gap-3 mt-6">
+                            <button type="button" class="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" onclick="previous_step()">← Previous</button>
+                            <div class="flex gap-3">
+                                <button type="button" class="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" onclick="save_draft()">Save Draft</button>
+                                <button type="button" class="px-6 py-2 text-white gradient-bg rounded-lg hover:opacity-90 transition" onclick="next_step()">Next Step →</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Experience & Submission -->
+                    <div id="form_step_experience" class="form-step hidden">
+                        <h3 class="text-2xl font-semibold mb-6">Experience & Submission</h3>
+
+                        <div class="mb-4">
+                            <label for="total_experience_years" class="block text-sm font-medium mb-2">Total Experience (Years)</label>
+                            <input type="number" id="total_experience_years" name="total_experience_years" min="0" max="10" step="0.5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Relevant Projects</label>
+                            <div id="projects_container" class="space-y-4"></div>
+                            <button type="button" class="mt-2 px-4 py-2 text-sm bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition" onclick="add_project_card()">+ Add Project</button>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="resume_upload" class="block text-sm font-medium mb-2">Resume (PDF/DOCX) *</label>
+                            <input type="file" id="resume_upload" name="resume_upload" accept=".pdf,.doc,.docx" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" aria-required="true">
+                            <div id="resume_file_name" class="mt-2 text-sm text-gray-600"></div>
+                            <span class="error-message text-red-600 text-sm hidden"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="cover_letter" class="block text-sm font-medium mb-2">Cover Letter (Optional)</label>
+                            <textarea id="cover_letter" name="cover_letter" rows="4" placeholder="Tell us why you're perfect for this role..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"></textarea>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="availability_date" class="block text-sm font-medium mb-2">Available From</label>
+                                <input type="date" id="availability_date" name="availability_date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label for="expected_stipend" class="block text-sm font-medium mb-2">Expected Stipend</label>
+                                <input type="text" id="expected_stipend" name="expected_stipend" placeholder="e.g., ₹15,000/month" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" id="consent_checkbox" name="consent_checkbox" required class="mt-1 w-4 h-4 text-purple-600 focus:ring-2 focus:ring-purple-500" aria-required="true">
+                                <span class="text-sm text-gray-700">I agree to the terms and conditions and consent to the processing of my personal data for recruitment purposes.</span>
+                            </label>
+                            <span class="error-message text-red-600 text-sm hidden"></span></div>
+
+                        <div class="flex justify-between gap-3 mt-6">
+                            <button type="button" class="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" onclick="previous_step()">← Previous</button>
+                            <div class="flex gap-3">
+                                <button type="button" class="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" onclick="save_draft()">Save Draft</button>
+                                <button type="submit" id="submit_application_button" class="px-6 py-2 text-white gradient-bg rounded-lg hover:opacity-90 transition">Submit Application ✓</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="application_id" name="application_id">
+                    <input type="hidden" id="submitted_at" name="submitted_at">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applicant Dashboard Section -->
+    <section id="applicant_dashboard" class="py-20 bg-gray-50 hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-4xl font-bold gradient-text">My Dashboard</h2>
+                <button id="applicant_logout_button" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">Logout</button>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Profile Card -->
+                <aside class="md:col-span-1">
+                    <div id="applicant_profile_card" class="bg-white rounded-2xl shadow-lg p-6">
+                        <div class="text-center mb-4">
+                            <div class="w-24 h-24 rounded-full gradient-bg mx-auto mb-3 flex items-center justify-center text-white text-3xl font-bold" id="applicant_avatar">A</div>
+                            <h3 id="applicant_name" class="text-xl font-semibold">Applicant Name</h3>
+                            <p id="applicant_email" class="text-sm text-gray-600">applicant@example.com</p>
+                        </div>
+                        <button class="w-full px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition" onclick="open_edit_profile_modal()">Edit Profile</button>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg p-6 mt-6">
+                        <h4 class="font-semibold mb-3">Quick Actions</h4>
+                        <div class="space-y-2">
+                            <button class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded-lg transition" onclick="scroll_to_apply()">New Application</button>
+                            <button class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded-lg transition" onclick="open_message_hr_modal()">Message HR</button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Applications List -->
+                <div class="md:col-span-2">
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-2xl font-semibold mb-6">My Applications</h3>
+                        <div id="applicant_applications_list" class="space-y-4">
+                            <!-- Applications will be rendered here -->
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg p-6 mt-6">
+                        <h3 class="text-xl font-semibold mb-4">Notifications</h3>
+                        <div id="applicant_notifications" class="space-y-3">
+                            <div class="p-3 bg-blue-50 border-l-4 border-blue-500 rounded">
+                                <p class="text-sm text-gray-700">Welcome to Veridia! Complete your application to get started.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HR Dashboard Section -->
+    <section id="hr_dashboard" class="py-20 bg-white hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-4xl font-bold gradient-text">HR Dashboard</h2>
+                    <p class="text-gray-600">Manage applications and candidates</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">HR Admin</span>
+                    <button id="hr_logout_button" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">Logout</button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid md:grid-cols-5 gap-4 mb-8">
+                <div class="bg-gradient-to-br from-blue-500 to-purple-600 text-white p-6 rounded-xl">
+                    <div class="text-3xl font-bold mb-1" id="total_applicants_count">0</div>
+                    <div class="text-sm opacity-90">Total Applicants</div>
+                </div>
+                <div class="bg-gradient-to-br from-green-500 to-teal-600 text-white p-6 rounded-xl">
+                    <div class="text-3xl font-bold mb-1" id="new_today_count">0</div>
+                    <div class="text-sm opacity-90">New Today</div>
+                </div>
+                <div class="bg-gradient-to-br from-yellow-500 to-orange-600 text-white p-6 rounded-xl">
+                    <div class="text-3xl font-bold mb-1" id="under_review_count">0</div>
+                    <div class="text-sm opacity-90">Under Review</div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-500 to-pink-600 text-white p-6 rounded-xl">
+                    <div class="text-3xl font-bold mb-1" id="interview_scheduled_count">0</div>
+                    <div class="text-sm opacity-90">Interviews</div>
+                </div>
+                <div class="bg-gradient-to-br from-indigo-500 to-blue-600 text-white p-6 rounded-xl">
+                    <div class="text-3xl font-bold mb-1" id="accepted_count">0</div>
+                    <div class="text-sm opacity-90">Accepted</div>
+                </div>
+            </div>
+
+            <!-- Filters and Search -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <div class="grid md:grid-cols-4 gap-4 mb-4">
+                    <div>
+                        <label for="admin_search_input" class="block text-sm font-medium mb-2">Search</label>
+                        <input type="text" id="admin_search_input" placeholder="Name, email, skills..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label for="admin_filter_status" class="block text-sm font-medium mb-2">Status</label>
+                        <select id="admin_filter_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            <option value="">All Statuses</option>
+                            <option value="draft">Draft</option>
+                            <option value="submitted">Submitted</option>
+                            <option value="under_review">Under Review</option>
+                            <option value="interview_scheduled">Interview Scheduled</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="admin_filter_experience" class="block text-sm font-medium mb-2">Experience</label>
+                        <select id="admin_filter_experience" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            <option value="">All</option>
+                            <option value="0-1">0-1 years</option>
+                            <option value="1-3">1-3 years</option>
+                            <option value="3+">3+ years</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">&nbsp;</label>
+                        <button onclick="apply_filters()" class="w-full px-4 py-2 gradient-bg text-white rounded-lg hover:opacity-90 transition">Apply Filters</button>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="export_selected_csv()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">Export Selected</button>
+                    <button onclick="bulk_change_status()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Bulk Status Change</button>
+                    <button onclick="clear_filters()" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition">Clear Filters</button>
+                </div>
+            </div>
+
+            <!-- Applicants Table -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table id="applicant_table" class="w-full">
+                        <thead class="bg-gray-50 border-b">
+                            <tr>
+                                <th class="px-4 py-3 text-left">
+                                    <input type="checkbox" id="select_all_checkbox" class="w-4 h-4" aria-label="Select all">
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold cursor-pointer hover:bg-gray-100" onclick="sort_table('name')">Name ↕</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold cursor-pointer hover:bg-gray-100" onclick="sort_table('email')">Email ↕</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold">Role</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold cursor-pointer hover:bg-gray-100" onclick="sort_table('submitted_at')">Submitted ↕</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold">Status</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold">Experience</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold">Score</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicant_table_body">
+                            <!-- Table rows will be rendered here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="px-6 py-4 border-t flex justify-between items-center">
+                    <div class="text-sm text-gray-600">
+                        Showing <span id="showing_start">0</span> to <span id="showing_end">0</span> of <span id="total_records">0</span> applicants
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="change_page(-1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition" id="prev_page_button">Previous</button>
+                        <span id="current_page_display" class="px-3 py-1">Page 1</span>
+                        <button onclick="change_page(1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition" id="next_page_button">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div class="grid md:grid-cols-2 gap-6 mt-8">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Application Sources</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">Direct Application</span>
+                            <div class="flex items-center gap-2">
+                                <div class="w-32 h-3 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full gradient-bg" style="width: 75%"></div>
+                                </div>
+                                <span class="text-sm font-medium">75%</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">Google Forms</span>
+                            <div class="flex items-center gap-2">
+                                <div class="w-32 h-3 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500" style="width: 25%"></div>
+                                </div>
+                                <span class="text-sm font-medium">25%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Top Skills</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-chip text-sm">JavaScript</span>
+                        <span class="skill-chip text-sm">React</span>
+                        <span class="skill-chip text-sm">Python</span>
+                        <span class="skill-chip text-sm">Node.js</span>
+                        <span class="skill-chip text-sm">Java</span>
+                        <span class="skill-chip text-sm">UI/UX</span>
+                    </div>
+                    <div class="mt-4 p-3 bg-purple-50 rounded-lg">
+                        <p class="text-sm text-gray-700">Average Time to Hire: <span class="font-semibold text-purple-700">12 days</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact_section" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-6 gradient-text">Get In Touch</h2>
+                <p class="text-lg text-gray-700 mb-8">Have questions? We're here to help you throughout your application journey.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="text-3xl mb-3">📧</div>
+                        <h3 class="font-semibold mb-2">Email Us</h3>
+                        <p class="text-gray-600">careers@veridia.com</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="text-3xl mb-3">💬</div>
+                        <h3 class="font-semibold mb-2">Chat Support</h3>
+                        <p class="text-gray-600">Available Mon-Fri, 9AM-6PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 rounded-lg gradient-bg flex items-center justify-center text-white font-bold text-xl">V</div>
+                        <span class="text-xl font-bold">Veridia</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Where innovation meets purpose. Join us in shaping the future.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#about_section" class="hover:text-white transition">About</a></li>
+                        <li><a href="#apply_section" class="hover:text-white transition">Apply</a></li>
+                        <li><a href="#features_section" class="hover:text-white transition">Features</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Follow Us</h4>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition" aria-label="LinkedIn">in</a>
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition" aria-label="Twitter">𝕏</a>
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition" aria-label="GitHub">GH</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-sm text-gray-400">
+                <p>&copy; 2025 Veridia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    
+    <!-- Login Modal -->
+    <div id="login_modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+            <h3 class="text-2xl font-bold mb-6 gradient-text">Login</h3>
+            <form id="login_form" class="space-y-4">
+                <div>
+                    <label for="login_email" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="login_email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label for="login_password" class="block text-sm font-medium mb-2">Password</label>
+                    <div class="relative">
+                        <input type="password" id="login_password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        <button type="button" class="absolute right-3 top-2.5 text-gray-500" onclick="toggle_password_visibility('login_password')" aria-label="Toggle password visibility">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" class="w-full px-4 py-3 text-white gradient-bg rounded-lg hover:opacity-90 transition font-medium">Login</button>
+                <div class="relative my-4">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+                <button type="button" class="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center justify-center gap-2">
+                    <span>🔍</span> Sign in with Google
+                </button>
+            </form>
+            <button onclick="close_login_modal()" class="mt-4 text-gray-600 hover:text-gray-900 text-sm">Close</button>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register_modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+            <h3 class="text-2xl font-bold mb-6 gradient-text">Create Account</h3>
+            <form id="register_form" class="space-y-4">
+                <div>
+                    <label for="register_name" class="block text-sm font-medium mb-2">Full Name</label>
+                    <input type="text" id="register_name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label for="register_email" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="register_email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label for="register_password" class="block text-sm font-medium mb-2">Password</label>
+                    <div class="relative">
+                        <input type="password" id="register_password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        <button type="button" class="absolute right-3 top-2.5 text-gray-500" onclick="toggle_password_visibility('register_password')" aria-label="Toggle password visibility">👁️</button>
+                    </div>
+                    <div id="password_strength" class="mt-2 text-sm"></div>
+                </div>
+                <div>
+                    <label for="register_confirm_password" class="block text-sm font-medium mb-2">Confirm Password</label>
+                    <input type="password" id="register_confirm_password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                </div>
+                <button type="submit" class="w-full px-4 py-3 text-white gradient-bg rounded-lg hover:opacity-90 transition font-medium">Create Account</button>
+                <div class="relative my-4">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+                <button type="button" class="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center justify-center gap-2">
+                    <span>🔍</span> Sign up with Google
+                </button>
+            </form>
+            <button onclick="close_register_modal()" class="mt-4 text-gray-600 hover:text-gray-900 text-sm">Close</button>
+        </div>
+    </div>
+
+    <!-- Application Detail Modal -->
+    <div id="application_detail_modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-start mb-6">
+                <h3 class="text-2xl font-bold gradient-text">Application Details</h3>
+                <button onclick="close_application_detail_modal()" class="text-gray-500 hover:text-gray-700" aria-label="Close">&times;</button>
+            </div>
+            <div id="application_detail_content">
+                <!-- Content will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Status Modal -->
+    <div id="change_status_modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+            <h3 class="text-xl font-bold mb-4 gradient-text">Change Application Status</h3>
+            <form id="change_status_form">
+                <input type="hidden" id="change_status_app_id">
+                <div class="mb-4">
+                    <label for="new_status_select" class="block text-sm font-medium mb-2">New Status</label>
+                    <select id="new_status_select" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        <option value="submitted">Submitted</option>
+                        <option value="under_review">Under Review</option>
+                        <option value="interview_scheduled">Interview Scheduled</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="status_email_template" class="block text-sm font-medium mb-2">Email Template</label>
+                    <select id="status_email_template" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" onchange="load_email_template()">
+                        <option value="">Select template...</option>
+                        <option value="submission_received">Submission Received</option>
+                        <option value="interview_invite">Interview Invitation</option>
+                        <option value="rejection">Rejection</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="status_email_content" class="block text-sm font-medium mb-2">Email Content</label>
+                    <textarea id="status_email_content" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"></textarea>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="close_change_status_modal()" class="flex-1 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition">Cancel</button>
+                    <button type="submit" class="flex-1 px-4 py-2 text-white gradient-bg rounded-lg hover:opacity-90 transition">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast_container" class="fixed top-20 right-4 z-50 space-y-3" aria-live="polite"></div>
+
+    <script>
+        // ==================== GLOBAL STATE ====================
+        let current_step = 1;
+        let current_page = 1;
+        const items_per_page = 10;
+        let current_user = null;
+        let current_user_role = null; // 'applicant' or 'hr'
+        let all_applications = [];
+        let filtered_applications = [];
+        let selected_application_ids = new Set();
+        let skills_array = [];
+        let projects_array = [];
+        let sort_column = null;
+        let sort_direction = 'asc';
+
+        // ==================== EMAIL TEMPLATES ====================
+        const email_templates = {
+            submission_received: "Dear {name},\n\nThank you for applying to the Veridia Internship Program. We have received your application and our team will review it shortly.\n\nYou can track your application status on your dashboard.\n\nBest regards,\nVeridia HR Team",
+            interview_invite: "Dear {name},\n\nCongratulations! We are impressed with your application and would like to invite you for an interview.\n\nPlease check your dashboard for interview details and scheduling options.\n\nBest regards,\nVeridia HR Team",
+            rejection: "Dear {name},\n\nThank you for your interest in the Veridia Internship Program. After careful consideration, we have decided to move forward with other candidates whose qualifications more closely match our current needs.\n\nWe appreciate the time you invested in the application process and encourage you to apply for future opportunities.\n\nBest regards,\nVeridia HR Team"
+        };
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function generate_uuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function get_current_timestamp() {
+            return new Date().toISOString();
+        }
+
+        function format_date(timestamp) {
+            if (!timestamp) return '-';
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function show_toast(message, type = 'success') {
+            const toast_container = document.getElementById('toast_container');
+            const toast = document.createElement('div');
+            toast.className = `toast px-6 py-4 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-blue-600'}`;
+            toast.textContent = message;
+            toast_container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function api_simulator(endpoint, method, data) {
+            // Simulates API calls with localStorage as backend
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Replace this section with actual fetch() calls to your backend
+                    // Example: fetch('/api' + endpoint, { method, body: JSON.stringify(data) })
+                    resolve({ success: true, data });
+                }, 500);
+            });
+        }
+
+        // ==================== LOCAL STORAGE DATABASE ====================
+        function init_local_db() {
+            if (!localStorage.getItem('veridia_applications')) {
+                const sample_applications = [
+                    {
+                        application_id: generate_uuid(),
+                        full_name: 'Sarah Johnson',
+                        email: 'sarah.johnson@example.com',
+                        phone_number: '9876543210',
+                        current_location: 'Bangalore',
+                        preferred_location: 'hybrid',
+                        linkedin_url: 'https://linkedin.com/in/sarahjohnson',
+                        portfolio_url: 'https://sarahj.dev',
+                        highest_qualification: 'bachelors',
+                        institution_name: 'MIT',
+                        graduation_year: '2024',
+                        cgpa_percentage: '8.9',
+                        skills: ['JavaScript', 'React', 'Node.js', 'MongoDB'],
+                        primary_tech_stack: ['javascript', 'react', 'nodejs'],
+                        github_url: 'https://github.com/sarahj',
+                        total_experience_years: 1,
+                        relevant_projects: [
+                            { title: 'E-commerce Platform', description: 'Built a full-stack e-commerce site', link: 'https://github.com/sarahj/ecommerce' }
+                        ],
+                        submitted_at: '2025-10-15T10:30:00Z',
+                        status: 'under_review',
+                        score: 85
+                    },
+                    {
+                        application_id: generate_uuid(),
+                        full_name: 'Michael Chen',
+                        email: 'michael.chen@example.com',
+                        phone_number: '9876543211',
+                        current_location: 'Mumbai',
+                        preferred_location: 'remote',
+                        linkedin_url: 'https://linkedin.com/in/michaelchen',
+                        portfolio_url: '',
+                        highest_qualification: 'masters',
+                        institution_name: 'Stanford',
+                        graduation_year: '2023',
+                        cgpa_percentage: '9.2',
+                        skills: ['Python', 'Machine Learning', 'TensorFlow', 'Data Science'],
+                        primary_tech_stack: ['python'],
+                        github_url: 'https://github.com/mchen',
+                        total_experience_years: 2,
+                        relevant_projects: [
+                            { title: 'ML Prediction Model', description: 'Developed predictive analytics model', link: 'https://github.com/mchen/ml-model' }
+                        ],
+                        submitted_at: '2025-10-16T14:20:00Z',
+                        status: 'interview_scheduled',
+                        score: 92
+                    },
+                    {
+                        application_id: generate_uuid(),
+                        full_name: 'Priya Sharma',
+                        email: 'priya.sharma@example.com',
+                        phone_number: '9876543212',
+                        current_location: 'Delhi',
+                        preferred_location: 'onsite',
+                        linkedin_url: 'https://linkedin.com/in/priyasharma',
+                        portfolio_url: 'https://priyasharma.design',
+                        highest_qualification: 'bachelors',
+                        institution_name: 'IIT Delhi',
+                        graduation_year: '2024',
+                        cgpa_percentage: '8.5',
+                        skills: ['UI/UX Design', 'Figma', 'React', 'CSS'],
+                        primary_tech_stack: ['javascript', 'react'],
+                        github_url: '',
+                        total_experience_years: 0.5,
+                        relevant_projects: [
+                            { title: 'Mobile App Design', description: 'Designed UI for fitness app', link: 'https://dribbble.com/priya' }
+                        ],
+                        submitted_at: '2025-10-17T09:15:00Z',
+                        status: 'submitted',
+                        score: 78
+                    },
+                    {
+                        application_id: generate_uuid(),
+                        full_name: 'James Wilson',
+                        email: 'james.wilson@example.com',
+                        phone_number: '9876543213',
+                        current_location: 'Pune',
+                        preferred_location: 'hybrid',
+                        linkedin_url: 'https://linkedin.com/in/jameswilson',
+                        portfolio_url: 'https://jameswilson.io',
+                        highest_qualification: 'bachelors',
+                        institution_name: 'UC Berkeley',
+                        graduation_year: '2023',
+                        cgpa_percentage: '8.7',
+                        skills: ['Java', 'Spring Boot', 'Microservices', 'AWS'],
+                        primary_tech_stack: ['java'],
+                        github_url: 'https://github.com/jwilson',
+                        total_experience_years: 1.5,
+                        relevant_projects: [
+                            { title: 'Cloud Service Platform', description: 'Built scalable microservices', link: 'https://github.com/jwilson/cloud-platform' }
+                        ],
+                        submitted_at: '2025-10-18T11:45:00Z',
+                        status: 'accepted',
+                        score: 88
+                    },
+                    {
+                        application_id: generate_uuid(),
+                        full_name: 'Emily Rodriguez',
+                        email: 'emily.rodriguez@example.com',
+                        phone_number: '9876543214',
+                        current_location: 'Hyderabad',
+                        preferred_location: 'remote',
+                        linkedin_url: 'https://linkedin.com/in/emilyrodriguez',
+                        portfolio_url: '',
+                        highest_qualification: 'bachelors',
+                        institution_name: 'Georgia Tech',
+                        graduation_year: '2024',
+                        cgpa_percentage: '8.3',
+                        skills: ['C++', 'Algorithms', 'Competitive Programming'],
+                        primary_tech_stack: ['cpp'],
+                        github_url: 'https://github.com/erodriguez',
+                        total_experience_years: 0,
+                        relevant_projects: [],
+                        submitted_at: '2025-10-19T16:00:00Z',
+                        status: 'rejected',
+                        score: 65
+                    },
+                    {
+                        application_id: generate_uuid(),
+                        full_name: 'Raj Patel',
+                        email: 'raj.patel@example.com',
+                        phone_number: '9876543215',
+                        current_location: 'Chennai',
+                        preferred_location: 'onsite',
+                        linkedin_url: 'https://linkedin.com/in/rajpatel',
+                        portfolio_url: 'https://rajpatel.dev',
+                        highest_qualification: 'bachelors',
+                        institution_name: 'IIT Madras',
+                        graduation_year: '2024',
+                        cgpa_percentage: '9.0',
+                        skills: ['JavaScript', 'TypeScript', 'Angular', 'Node.js'],
+                        primary_tech_stack: ['javascript', 'nodejs'],
+                        github_url: 'https://github.com/rpatel',
+                        total_experience_years: 1,
+                        relevant_projects: [
+                            { title: 'Real-time Chat App', description: 'Built with WebSockets', link: 'https://github.com/rpatel/chat-app' }
+                        ],
+                        submitted_at: '2025-10-20T08:30:00Z',
+                        status: 'submitted',
+                        score: 82
+                    }
+                ];
+                localStorage.setItem('veridia_applications', JSON.stringify(sample_applications));
+            }
+
+            if (!localStorage.getItem('veridia_users')) {
+                const sample_users = [
+                    { email: 'hr@veridia.com', password: 'hr123', name: 'HR Admin', role: 'hr' },
+                    { email: 'applicant@test.com', password: 'test123', name: 'Test Applicant', role: 'applicant' }
+                ];
+                localStorage.setItem('veridia_users', JSON.stringify(sample_users));
+            }
+        }
+
+        function save_application_to_local_db(application_data) {
+            const applications = JSON.parse(localStorage.getItem('veridia_applications') || '[]');
+            const existing_index = applications.findIndex(app => app.application_id === application_data.application_id);
+            
+            if (existing_index >= 0) {
+                applications[existing_index] = application_data;
+            } else {
+                applications.push(application_data);
+            }
+            
+            localStorage.setItem('veridia_applications', JSON.stringify(applications));
+            return application_data;
+        }
+
+        function get_applications_from_local_db() {
+            return JSON.parse(localStorage.getItem('veridia_applications') || '[]');
+        }
+
+        function get_user_applications(user_email) {
+            const applications = get_applications_from_local_db();
+            return applications.filter(app => app.email === user_email);
+        }
+
+        // ==================== FORM NAVIGATION ====================
+        function next_step() {
+            if (validate_current_step()) {
+                const steps = document.querySelectorAll('.form-step');
+                steps[current_step - 1].classList.add('hidden');
+                current_step++;
+                steps[current_step - 1].classList.remove('hidden');
+                update_progress_bar();
+                save_draft();
+            }
+        }
+
+        function previous_step() {
+            const steps = document.querySelectorAll('.form-step');
+            steps[current_step - 1].classList.add('hidden');
+            current_step--;
+            steps[current_step - 1].classList.remove('hidden');
+            update_progress_bar();
+        }
+
+        function update_progress_bar() {
+            const progress_bar = document.getElementById('progress_bar');
+            const progress_label = document.getElementById('progress_label');
+            const progress_percent = document.getElementById('progress_percent');
+            
+            const step_labels = ['Personal Details', 'Education & Skills', 'Experience & Submission'];
+            const percent = Math.round((current_step / 3) * 100);
+            
+            progress_bar.style.width = percent + '%';
+            progress_label.textContent = `Step ${current_step} of 3: ${step_labels[current_step - 1]}`;
+            progress_percent.textContent = percent + '%';
+        }
+
+        function validate_current_step() {
+            const current_form_step = document.querySelectorAll('.form-step')[current_step - 1];
+            const required_fields = current_form_step.querySelectorAll('[required]');
+            let is_valid = true;
+
+            required_fields.forEach(field => {
+                const error_span = field.nextElementSibling;
+                if (field.type === 'checkbox') {
+                    if (!field.checked) {
+                        is_valid = false;
+                        if (error_span && error_span.classList.contains('error-message')) {
+                            error_span.textContent = 'This field is required';
+                            error_span.classList.remove('hidden');
+                        }
+                    } else {
+                        if (error_span && error_span.classList.contains('error-message')) {
+                            error_span.classList.add('hidden');
+                        }
+                    }
+                } else {
+                    if (!field.value.trim()) {
+                        is_valid = false;
+                        if (error_span && error_span.classList.contains('error-message')) {
+                            error_span.textContent = 'This field is required';
+                            error_span.classList.remove('hidden');
+                        }
+                        field.classList.add('border-red-500');
+                    } else {
+                        if (error_span && error_span.classList.contains('error-message')) {
+                            error_span.classList.add('hidden');
+                        }
+                        field.classList.remove('border-red-500');
+                    }
+                }
+            });
+
+            // Validate phone number format
+            const phone_input = document.getElementById('phone_number');
+            if (phone_input && current_step === 1) {
+                const phone_pattern = /^[0-9]{10}$/;
+                if (phone_input.value && !phone_pattern.test(phone_input.value)) {
+                    is_valid = false;
+                    const error_span = phone_input.nextElementSibling;
+                    if (error_span && error_span.classList.contains('error-message')) {
+                        error_span.textContent = 'Please enter a valid 10-digit phone number';
+                        error_span.classList.remove('hidden');
+                    }
+                }
+            }
+
+            // Validate file upload in step 3
+            const resume_upload = document.getElementById('resume_upload');
+            if (resume_upload && current_step === 3 && !resume_upload.files.length) {
+                is_valid = false;
+                const error_span = resume_upload.nextElementSibling?.nextElementSibling;
+                if (error_span && error_span.classList.contains('error-message')) {
+                    error_span.textContent = 'Please upload your resume';
+                    error_span.classList.remove('hidden');
+                }
+            }
+
+            return is_valid;
+        }
+
+        // ==================== FORM AUTOSAVE & DRAFT ====================
+        function save_draft() {
+            const form_data = get_form_data();
+            form_data.is_draft = true;
+            localStorage.setItem('veridia_application_draft', JSON.stringify(form_data));
+            show_toast('Draft saved successfully', 'info');
+        }
+
+        function load_draft() {
+            const draft = localStorage.getItem('veridia_application_draft');
+            if (draft) {
+                const form_data = JSON.parse(draft);
+                populate_form(form_data);
+                show_toast('Draft loaded', 'info');
+            }
+        }
+
+        function get_form_data() {
+            const form = document.getElementById('application_form');
+            const form_data = {
+                application_id: document.getElementById('application_id').value || generate_uuid(),
+                full_name: document.getElementById('full_name').value,
+                email: document.getElementById('email').value,
+                phone_number: document.getElementById('phone_number').value,
+                current_location: document.getElementById('current_location').value,
+                preferred_location: document.getElementById('preferred_location').value,
+                linkedin_url: document.getElementById('linkedin_url').value,
+                portfolio_url: document.getElementById('portfolio_url').value,
+                highest_qualification: document.getElementById('highest_qualification').value,
+                institution_name: document.getElementById('institution_name').value,
+                graduation_year: document.getElementById('graduation_year').value,
+                cgpa_percentage: document.getElementById('cgpa_percentage').value,
+                skills: skills_array,
+                primary_tech_stack: Array.from(form.querySelectorAll('input[name="primary_tech_stack"]:checked')).map(cb => cb.value),
+                github_url: document.getElementById('github_url').value,
+                total_experience_years: parseFloat(document.getElementById('total_experience_years').value) || 0,
+                relevant_projects: projects_array,
+                availability_date: document.getElementById('availability_date').value,
+                expected_stipend: document.getElementById('expected_stipend').value,
+                cover_letter: document.getElementById('cover_letter').value,
+                submitted_at: null,
+                status: 'draft',
+                score: 0
+            };
+            return form_data;
+        }
+
+        function populate_form(form_data) {
+            document.getElementById('application_id').value = form_data.application_id || generate_uuid();
+            document.getElementById('full_name').value = form_data.full_name || '';
+            document.getElementById('email').value = form_data.email || '';
+            document.getElementById('phone_number').value = form_data.phone_number || '';
+            document.getElementById('current_location').value = form_data.current_location || '';
+            document.getElementById('preferred_location').value = form_data.preferred_location || 'remote';
+            document.getElementById('linkedin_url').value = form_data.linkedin_url || '';
+            document.getElementById('portfolio_url').value = form_data.portfolio_url || '';
+            document.getElementById('highest_qualification').value = form_data.highest_qualification || '';
+            document.getElementById('institution_name').value = form_data.institution_name || '';
+            document.getElementById('graduation_year').value = form_data.graduation_year || '';
+            document.getElementById('cgpa_percentage').value = form_data.cgpa_percentage || '';
+            document.getElementById('github_url').value = form_data.github_url || '';
+            document.getElementById('total_experience_years').value = form_data.total_experience_years || 0;
+            document.getElementById('cover_letter').value = form_data.cover_letter || '';
+            document.getElementById('availability_date').value = form_data.availability_date || '';
+            document.getElementById('expected_stipend').value = form_data.expected_stipend || '';
+
+            if (form_data.skills) {
+                skills_array = form_data.skills;
+                render_skills();
+            }
+
+            if (form_data.primary_tech_stack) {
+                form_data.primary_tech_stack.forEach(tech => {
+                    const checkbox = document.querySelector(`input[name="primary_tech_stack"][value="${tech}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+            }
+
+            if (form_data.relevant_projects) {
+                projects_array = form_data.relevant_projects;
+                render_projects();
+            }
+        }
+
+        // ==================== SKILLS TAG INPUT ====================
+        function init_skills_input() {
+            const skills_input = document.getElementById('skills_input');
+            const skills_container = document.getElementById('skills_container');
+
+            skills_input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const skill = skills_input.value.trim();
+                    if (skill && !skills_array.includes(skill)) {
+                        skills_array.push(skill);
+                        render_skills();
+                        skills_input.value = '';
+                    }
+                }
+            });
+        }
+
+        function render_skills() {
+            const skills_container = document.getElementById('skills_container');
+            const input_field = document.getElementById('skills_input');
+            
+            // Remove existing chips
+            skills_container.querySelectorAll('.skill-chip').forEach(chip => chip.remove());
+            
+            // Add chips
+            skills_array.forEach(skill => {
+                const chip = document.createElement('div');
+                chip.className = 'skill-chip text-sm';
+                chip.innerHTML = `
+                    ${skill}
+                    <button type="button" onclick="remove_skill('${skill}')" class="ml-1 text-red-600 hover:text-red-800" aria-label="Remove ${skill}">×</button>
+                `;
+                skills_container.insertBefore(chip, input_field);
+            });
+
+            document.getElementById('skills').value = JSON.stringify(skills_array);
+        }
+
+        function remove_skill(skill) {
+            skills_array = skills_array.filter(s => s !== skill);
+            render_skills();
+        }
+
+        // ==================== PROJECTS MANAGEMENT ====================
+        function add_project_card() {
+            if (projects_array.length >= 3) {
+                show_toast('Maximum 3 projects allowed', 'error');
+                return;
+            }
+
+            projects_array.push({ title: '', description: '', link: '' });
+            render_projects();
+        }
+
+        function render_projects() {
+            const projects_container = document.getElementById('projects_container');
+            projects_container.innerHTML = '';
+
+            projects_array.forEach((project, index) => {
+                const project_card = document.createElement('div');
+                project_card.className = 'border border-gray-300 rounded-lg p-4';
+                project_card.innerHTML = `
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-medium">Project ${index + 1}</h4>
+                        <button type="button" onclick="remove_project(${index})" class="text-red-600 hover:text-red-800" aria-label="Remove project">Remove</button>
+                    </div>
+                    <div class="space-y-3">
+                        <input type="text" placeholder="Project Title" value="${project.title}" onchange="update_project(${index}, 'title', this.value)" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        <textarea placeholder="Brief Description" onchange="update_project(${index}, 'description', this.value)" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" rows="2">${project.description}</textarea>
+                        <input type="url" placeholder="Project Link" value="${project.link}" onchange="update_project(${index}, 'link', this.value)" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                    </div>
+                `;
+                projects_container.appendChild(project_card);
+            });
+        }
+
+        function update_project(index, field, value) {
+            projects_array[index][field] = value;
+        }
+
+        function remove_project(index) {
+            projects_array.splice(index, 1);
+            render_projects();
+        }
+
+        // ==================== FILE HANDLING ====================
+        function init_file_inputs() {
+            const profile_picture = document.getElementById('profile_picture');
+            const resume_upload = document.getElementById('resume_upload');
+
+            profile_picture.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        show_toast('Image size should be less than 5MB', 'error');
+                        profile_picture.value = '';
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const preview = document.getElementById('profile_picture_preview');
+                        preview.querySelector('img').src = event.target.result;
+                        preview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            resume_upload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 10 * 1024 * 1024) {
+                        show_toast('Resume size should be less than 10MB', 'error');
+                        resume_upload.value = '';
+                        return;
+                    }
+
+                    const allowed_types = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                    if (!allowed_types.includes(file.type)) {
+                        show_toast('Please upload PDF or DOCX file', 'error');
+                        resume_upload.value = '';
+                        return;
+                    }
+
+                    document.getElementById('resume_file_name').textContent = `Selected: ${file.name}`;
+                    const error_span = resume_upload.nextElementSibling?.nextElementSibling;
+                    if (error_span && error_span.classList.contains('error-message')) {
+                        error_span.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // ==================== FORM SUBMISSION ====================
+        function init_application_form() {
+            const form = document.getElementById('application_form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (!validate_current_step()) {
+                    show_toast('Please fill all required fields', 'error');
+                    return;
+                }
+
+                const form_data = get_form_data();
+                form_data.submitted_at = get_current_timestamp();
+                form_data.status = 'submitted';
+                form_data.score = Math.floor(Math.random() * 30) + 70; // Mock score 70-100
+
+                // Save to local DB
+                save_application_to_local_db(form_data);
+
+                // Clear draft
+                localStorage.removeItem('veridia_application_draft');
+
+                // Show success message
+                show_toast('Application submitted successfully!', 'success');
+
+                // Reset form
+                form.reset();
+                current_step = 1;
+                skills_array = [];
+                projects_array = [];
+                document.querySelectorAll('.form-step').forEach((step, index) => {
+                    step.classList.toggle('hidden', index !== 0);
+                });
+                update_progress_bar();
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // If user is logged in, redirect to dashboard
+                if (current_user && current_user_role === 'applicant') {
+                    setTimeout(() => {
+                        show_applicant_dashboard();
+                    }, 2000);
+                }
+            });
+        }
+
+        // ==================== AUTH FUNCTIONS ====================
+        function open_login_modal() {
+            document.getElementById('login_modal').classList.remove('hidden');
+            document.getElementById('login_modal').classList.add('flex');
+        }
+
+        function close_login_modal() {
+            document.getElementById('login_modal').classList.add('hidden');
+            document.getElementById('login_modal').classList.remove('flex');
+        }
+
+        function open_register_modal() {
+            document.getElementById('register_modal').classList.remove('hidden');
+            document.getElementById('register_modal').classList.add('flex');
+        }
+
+        function close_register_modal() {
+            document.getElementById('register_modal').classList.add('hidden');
+            document.getElementById('register_modal').classList.remove('flex');
+        }
+
+        function toggle_password_visibility(input_id) {
+            const input = document.getElementById(input_id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        function init_auth() {
+            document.getElementById('login_button').addEventListener('click', open_login_modal);
+            document.getElementById('register_button').addEventListener('click', open_register_modal);
+
+            document.getElementById('login_form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login_email').value;
+                const password = document.getElementById('login_password').value;
+
+                const users = JSON.parse(localStorage.getItem('veridia_users') || '[]');
+                const user = users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    current_user = user;
+                    current_user_role = user.role;
+                    show_toast(`Welcome back, ${user.name}!`, 'success');
+                    close_login_modal();
+
+                    if (user.role === 'hr') {
+                        show_hr_dashboard();
+                    } else {
+                        show_applicant_dashboard();
+                    }
+                } else {
+                    show_toast('Invalid credentials', 'error');
+                }
+            });
+
+            document.getElementById('register_form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('register_name').value;
+                const email = document.getElementById('register_email').value;
+                const password = document.getElementById('register_password').value;
+                const confirm_password = document.getElementById('register_confirm_password').value;
+
+                if (password !== confirm_password) {
+                    show_toast('Passwords do not match', 'error');
+                    return;
+                }
+
+                const users = JSON.parse(localStorage.getItem('veridia_users') || '[]');
+                
+                if (users.find(u => u.email === email)) {
+                    show_toast('Email already registered', 'error');
+                    return;
+                }
+
+                const new_user = { email, password, name, role: 'applicant' };
+                users.push(new_user);
+                localStorage.setItem('veridia_users', JSON.stringify(users));
+
+                current_user = new_user;
+                current_user_role = 'applicant';
+                show_toast('Account created successfully!', 'success');
+                close_register_modal();
+                show_applicant_dashboard();
+            });
+
+            // Password strength indicator
+            document.getElementById('register_password').addEventListener('input', (e) => {
+                const password = e.target.value;
+                const strength_div = document.getElementById('password_strength');
+                let strength = 'Weak';
+                let color = 'text-red-600';
+
+                if (password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+                    strength = 'Strong';
+                    color = 'text-green-600';
+                } else if (password.length >= 6) {
+                    strength = 'Medium';
+                    color = 'text-yellow-600';
+                }
+
+                strength_div.textContent = `Password strength: ${strength}`;
+                strength_div.className = `mt-2 text-sm ${color}`;
+            });
+        }
+
+        function logout() {
+            current_user = null;
+            current_user_role = null;
+            hide_all_dashboards();
+            show_toast('Logged out successfully', 'info');
+        }
+
+        function hide_all_dashboards() {
+            document.getElementById('applicant_dashboard').classList.add('hidden');
+            document.getElementById('hr_dashboard').classList.add('hidden');
+        }
+
+        // ==================== APPLICANT DASHBOARD ====================
+        function show_applicant_dashboard() {
+            hide_all_dashboards();
+            document.getElementById('applicant_dashboard').classList.remove('hidden');
+            
+            // Update profile card
+            document.getElementById('applicant_name').textContent = current_user.name;
+            document.getElementById('applicant_email').textContent = current_user.email;
+            document.getElementById('applicant_avatar').textContent = current_user.name.charAt(0).toUpperCase();
+
+            // Load applications
+            render_applicant_applications();
+
+            // Scroll to dashboard
+            document.getElementById('applicant_dashboard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function render_applicant_applications() {
+            const applications = get_user_applications(current_user.email);
+            const list = document.getElementById('applicant_applications_list');
+
+            if (applications.length === 0) {
+                list.innerHTML = '<p class="text-gray-600 text-center py-8">No applications yet. <a href="#apply_section" class="text-purple-700 underline">Start your application</a></p>';
+                return;
+            }
+
+            list.innerHTML = applications.map(app => {
+                const status_colors = {
+                    draft: 'bg-gray-100 text-gray-700',
+                    submitted: 'bg-blue-100 text-blue-700',
+                    under_review: 'bg-yellow-100 text-yellow-700',
+                    interview_scheduled: 'bg-purple-100 text-purple-700',
+                    accepted: 'bg-green-100 text-green-700',
+                    rejected: 'bg-red-100 text-red-700'
+                };
+
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-semibold text-lg">${app.full_name}</h4>
+                                <p class="text-sm text-gray-600">Applied: ${format_date(app.submitted_at)}</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium ${status_colors[app.status]}">${app.status.replace('_', ' ').toUpperCase()}</span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-sm text-gray-600 mb-1">Application Progress</div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="gradient-bg h-2 rounded-full" style="width: ${get_progress_percent(app.status)}%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="view_application_detail('${app.application_id}')" class="px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition">View Details</button>
+                            ${app.status === 'draft' ? `<button onclick="continue_application('${app.application_id}')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition">Continue</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function get_progress_percent(status) {
+            const progress = {
+                draft: 10,
+                submitted: 25,
+                under_review: 50,
+                interview_scheduled: 75,
+                accepted: 100,
+                rejected: 100
+            };
+            return progress[status] || 0;
+        }
+
+        function view_application_detail(app_id) {
+            const applications = get_applications_from_local_db();
+            const app = applications.find(a => a.application_id === app_id);
+
+            if (!app) return;
+
+            const content = `
+                <div class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-sm font-medium text-gray-600">Full Name</label>
+                            <p class="font-semibold">${app.full_name}</p>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-600">Email</label>
+                            <p class="font-semibold">${app.email}</p>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-600">Phone</label>
+                            <p class="font-semibold">${app.phone_number}</p>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-600">Location</label>
+                            <p class="font-semibold">${app.current_location || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-600">Qualification</label>
+                            <p class="font-semibold">${app.highest_qualification || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-600">Experience</label>
+                            <p class="font-semibold">${app.total_experience_years || 0} years</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium text-gray-600">Skills</label>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            ${(app.skills || []).map(skill => `<span class="skill-chip text-sm">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    ${app.relevant_projects && app.relevant_projects.length > 0 ? `
+                        <div>
+                            <label class="text-sm font-medium text-gray-600">Projects</label>
+                            <div class="space-y-3 mt-2">
+                                ${app.relevant_projects.map(project => `
+                                    <div class="border border-gray-200 rounded-lg p-3">
+                                        <h5 class="font-semibold">${project.title}</h5>
+                                        <p class="text-sm text-gray-600 mt-1">${project.description}</p>
+                                        ${project.link ? `<a href="${project.link}" target="_blank" class="text-sm text-purple-700 hover:underline">View Project →</a>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <div class="border-t pt-4">
+                        <label class="text-sm font-medium text-gray-600">Status Timeline</label>
+                        <div class="mt-3 space-y-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                <span class="text-sm">Submitted - ${format_date(app.submitted_at)}</span>
+                            </div>
+                            ${app.status !== 'submitted' && app.status !== 'draft' ? `
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full ${app.status === 'under_review' || app.status === 'interview_scheduled' || app.status === 'accepted' ? 'bg-green-500' : 'bg-gray-300'}"></div>
+                                    <span class="text-sm">Under Review</span>
+                                </div>
+                            ` : ''}
+                            ${app.status === 'interview_scheduled' || app.status === 'accepted' ? `
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full ${app.status === 'interview_scheduled' || app.status === 'accepted' ? 'bg-green-500' : 'bg-gray-300'}"></div>
+                                    <span class="text-sm">Interview Scheduled</span>
+                                </div>
+                            ` : ''}
+                            ${app.status === 'accepted' ? `
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    <span class="text-sm">Accepted</span>
+                                </div>
+                            ` : ''}
+                            ${app.status === 'rejected' ? `
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <span class="text-sm">Application Not Selected</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('application_detail_content').innerHTML = content;
+            document.getElementById('application_detail_modal').classList.remove('hidden');
+            document.getElementById('application_detail_modal').classList.add('flex');
+        }
+
+        function close_application_detail_modal() {
+            document.getElementById('application_detail_modal').classList.add('hidden');
+            document.getElementById('application_detail_modal').classList.remove('flex');
+        }
+
+        function continue_application(app_id) {
+            const draft = localStorage.getItem('veridia_application_draft');
+            if (draft) {
+                const form_data = JSON.parse(draft);
+                populate_form(form_data);
+                scroll_to_apply();
+            }
+        }
+
+        function open_edit_profile_modal() {
+            show_toast('Profile editing feature coming soon!', 'info');
+        }
+
+        function open_message_hr_modal() {
+            show_toast('Messaging feature coming soon!', 'info');
+        }
+
+        function scroll_to_apply() {
+            document.getElementById('apply_section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ==================== HR DASHBOARD ====================
+        function show_hr_dashboard() {
+            hide_all_dashboards();
+            document.getElementById('hr_dashboard').classList.remove('hidden');
+            
+            all_applications = get_applications_from_local_db();
+            filtered_applications = [...all_applications];
+            
+            update_summary_cards();
+            render_applicant_table();
+            
+            document.getElementById('hr_dashboard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function update_summary_cards() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            document.getElementById('total_applicants_count').textContent = all_applications.length;
+            document.getElementById('new_today_count').textContent = all_applications.filter(app => 
+                app.submitted_at && app.submitted_at.startsWith(today)
+            ).length;
+            document.getElementById('under_review_count').textContent = all_applications.filter(app => 
+                app.status === 'under_review'
+            ).length;
+            document.getElementById('interview_scheduled_count').textContent = all_applications.filter(app => 
+                app.status === 'interview_scheduled'
+            ).length;
+            document.getElementById('accepted_count').textContent = all_applications.filter(app => 
+                app.status === 'accepted'
+            ).length;
+        }
+
+        function render_applicant_table() {
+            const tbody = document.getElementById('applicant_table_body');
+            const start = (current_page - 1) * items_per_page;
+            const end = start + items_per_page;
+            const paginated = filtered_applications.slice(start, end);
+
+            if (paginated.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="px-4 py-8 text-center text-gray-600">No applications found</td></tr>';
+                return;
+            }
+
+            const status_colors = {
+                draft: 'bg-gray-100 text-gray-700',
+                submitted: 'bg-blue-100 text-blue-700',
+                under_review: 'bg-yellow-100 text-yellow-700',
+                interview_scheduled: 'bg-purple-100 text-purple-700',
+                accepted: 'bg-green-100 text-green-700',
+                rejected: 'bg-red-100 text-red-700'
+            };
+
+            tbody.innerHTML = paginated.map(app => `
+                <tr class="border-b hover:bg-gray-50" data-application-id="${app.application_id}">
+                    <td class="px-4 py-3">
+                        <input type="checkbox" class="applicant-checkbox w-4 h-4" value="${app.application_id}" onchange="handle_checkbox_change()">
+                    </td>
+                    <td class="px-4 py-3">${app.full_name}</td>
+                    <td class="px-4 py-3 text-sm">${app.email}</td>
+                    <td class="px-4 py-3 text-sm">Web Developer</td>
+                    <td class="px-4 py-3 text-sm">${format_date(app.submitted_at)}</td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 rounded-full text-xs font-medium ${status_colors[app.status]}" data-status="${app.status}">
+                            ${app.status.replace('_', ' ').toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-sm">${app.total_experience_years || 0} yrs</td>
+                    <td class="px-4 py-3 text-sm font-medium">${app.score || '-'}</td>
+                    <td class="px-4 py-3">
+                        <div class="flex gap-2">
+                            <button onclick="view_application_detail('${app.application_id}')" class="text-purple-700 hover:text-purple-900 text-sm" title="View">👁️</button>
+                            <button onclick="open_change_status_modal('${app.application_id}')" class="text-blue-700 hover:text-blue-900 text-sm" title="Change Status">✏️</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update pagination
+            document.getElementById('showing_start').textContent = start + 1;
+            document.getElementById('showing_end').textContent = Math.min(end, filtered_applications.length);
+            document.getElementById('total_records').textContent = filtered_applications.length;
+            document.getElementById('current_page_display').textContent = `Page ${current_page}`;
+            
+            document.getElementById('prev_page_button').disabled = current_page === 1;
+            document.getElementById('next_page_button').disabled = end >= filtered_applications.length;
+        }
+
+        function handle_checkbox_change() {
+            const checkboxes = document.querySelectorAll('.applicant-checkbox:checked');
+            selected_application_ids.clear();
+            checkboxes.forEach(cb => selected_application_ids.add(cb.value));
+        }
+
+        function change_page(delta) {
+            const max_page = Math.ceil(filtered_applications.length / items_per_page);
+            current_page = Math.max(1, Math.min(current_page + delta, max_page));
+            render_applicant_table();
+        }
+
+        function sort_table(column) {
+            if (sort_column === column) {
+                sort_direction = sort_direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                sort_column = column;
+                sort_direction = 'asc';
+            }
+
+            filtered_applications.sort((a, b) => {
+                let val_a = a[column === 'name' ? 'full_name' : column];
+                let val_b = b[column === 'name' ? 'full_name' : column];
+
+                if (column === 'submitted_at') {
+                    val_a = new Date(val_a || 0).getTime();
+                    val_b = new Date(val_b || 0).getTime();
+                }
+
+                if (val_a < val_b) return sort_direction === 'asc' ? -1 : 1;
+                if (val_a > val_b) return sort_direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            render_applicant_table();
+        }
+
+        function apply_filters() {
+            const search_term = document.getElementById('admin_search_input').value.toLowerCase();
+            const status_filter = document.getElementById('admin_filter_status').value;
+            const experience_filter = document.getElementById('admin_filter_experience').value;
+
+            filtered_applications = all_applications.filter(app => {
+                // Search filter
+                const matches_search = !search_term || 
+                    app.full_name.toLowerCase().includes(search_term) ||
+                    app.email.toLowerCase().includes(search_term) ||
+                    (app.skills && app.skills.some(skill => skill.toLowerCase().includes(search_term)));
+
+                // Status filter
+                const matches_status = !status_filter || app.status === status_filter;
+
+                // Experience filter
+                let matches_experience = true;
+                if (experience_filter === '0-1') {
+                    matches_experience = app.total_experience_years <= 1;
+                } else if (experience_filter === '1-3') {
+                    matches_experience = app.total_experience_years > 1 && app.total_experience_years <= 3;
+                } else if (experience_filter === '3+') {
+                    matches_experience = app.total_experience_years > 3;
+                }
+
+                return matches_search && matches_status && matches_experience;
+            });
+
+            current_page = 1;
+            render_applicant_table();
+            show_toast(`Found ${filtered_applications.length} applications`, 'info');
+        }
+
+        function clear_filters() {
+            document.getElementById('admin_search_input').value = '';
+            document.getElementById('admin_filter_status').value = '';
+            document.getElementById('admin_filter_experience').value = '';
+            filtered_applications = [...all_applications];
+            current_page = 1;
+            render_applicant_table();
+        }
+
+        // ==================== STATUS CHANGE ====================
+        function open_change_status_modal(app_id) {
+            document.getElementById('change_status_app_id').value = app_id;
+            const app = all_applications.find(a => a.application_id === app_id);
+            if (app) {
+                document.getElementById('new_status_select').value = app.status;
+            }
+            document.getElementById('change_status_modal').classList.remove('hidden');
+            document.getElementById('change_status_modal').classList.add('flex');
+        }
+
+        function close_change_status_modal() {
+            document.getElementById('change_status_modal').classList.add('hidden');
+            document.getElementById('change_status_modal').classList.remove('flex');
+        }
+
+        function load_email_template() {
+            const template_select = document.getElementById('status_email_template');
+            const content_textarea = document.getElementById('status_email_content');
+            const app_id = document.getElementById('change_status_app_id').value;
+            const app = all_applications.find(a => a.application_id === app_id);
+
+            if (template_select.value && app) {
+                let template = email_templates[template_select.value];
+                template = template.replace('{name}', app.full_name);
+                content_textarea.value = template;
+            }
+        }
+
+        function init_change_status_form() {
+            document.getElementById('change_status_form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const app_id = document.getElementById('change_status_app_id').value;
+                const new_status = document.getElementById('new_status_select').value;
+                const email_content = document.getElementById('status_email_content').value;
+
+                // Update application status
+                const app_index = all_applications.findIndex(a => a.application_id === app_id);
+                if (app_index >= 0) {
+                    all_applications[app_index].status = new_status;
+                    save_application_to_local_db(all_applications[app_index]);
+                }
+
+                // Simulate sending email
+                if (email_content) {
+                    show_toast('Status updated and email sent!', 'success');
+                } else {
+                    show_toast('Status updated successfully!', 'success');
+                }
+
+                close_change_status_modal();
+                filtered_applications = [...all_applications];
+                update_summary_cards();
+                render_applicant_table();
+            });
+        }
+
+        function bulk_change_status() {
+            if (selected_application_ids.size === 0) {
+                show_toast('Please select applications first', 'error');
+                return;
+            }
+
+            const new_status = prompt('Enter new status (submitted, under_review, interview_scheduled, accepted, rejected):');
+            if (!new_status) return;
+
+            const valid_statuses = ['submitted', 'under_review', 'interview_scheduled', 'accepted', 'rejected'];
+            if (!valid_statuses.includes(new_status)) {
+                show_toast('Invalid status', 'error');
+                return;
+            }
+
+            selected_application_ids.forEach(app_id => {
+                const app_index = all_applications.findIndex(a => a.application_id === app_id);
+                if (app_index >= 0) {
+                    all_applications[app_index].status = new_status;
+                    save_application_to_local_db(all_applications[app_index]);
+                }
+            });
+
+            show_toast(`Updated ${selected_application_ids.size} applications`, 'success');
+            selected_application_ids.clear();
+            filtered_applications = [...all_applications];
+            update_summary_cards();
+            render_applicant_table();
+        }
+
+        // ==================== EXPORT FUNCTIONS ====================
+        function export_selected_csv() {
+            const apps_to_export = selected_application_ids.size > 0 
+                ? all_applications.filter(app => selected_application_ids.has(app.application_id))
+                : filtered_applications;
+
+            if (apps_to_export.length === 0) {
+                show_toast('No applications to export', 'error');
+                return;
+            }
+
+            const csv_headers = ['Name', 'Email', 'Phone', 'Location', 'Qualification', 'Experience', 'Skills', 'Status', 'Submitted Date', 'Score'];
+            const csv_rows = apps_to_export.map(app => [
+                app.full_name,
+                app.email,
+                app.phone_number,
+                app.current_location || '',
+                app.highest_qualification || '',
+                app.total_experience_years || 0,
+                (app.skills || []).join('; '),
+                app.status,
+                format_date(app.submitted_at),
+                app.score || ''
+            ]);
+
+            let csv_content = csv_headers.join(',') + '\n';
+            csv_rows.forEach(row => {
+                csv_content += row.map(field => `"${field}"`).join(',') + '\n';
+            });
+
+            const blob = new Blob([csv_content], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `veridia_applications_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            window.URL.revokeObjectURL(url);
+
+            show_toast(`Exported ${apps_to_export.length} applications`, 'success');
+        }
+
+        // ==================== INITIALIZATION ====================
+        function populate_graduation_years() {
+            const select = document.getElementById('graduation_year');
+            const current_year = new Date().getFullYear();
+            for (let year = current_year + 4; year >= current_year - 10; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                select.appendChild(option);
+            }
+        }
+
+        function init_event_listeners() {
+            document.getElementById('hero_apply_button').addEventListener('click', scroll_to_apply);
+            document.getElementById('applicant_logout_button').addEventListener('click', logout);
+            document.getElementById('hr_logout_button').addEventListener('click', logout);
+
+            // Select all checkbox
+            document.getElementById('select_all_checkbox').addEventListener('change', (e) => {
+                document.querySelectorAll('.applicant-checkbox').forEach(cb => {
+                    cb.checked = e.target.checked;
+                });
+                handle_checkbox_change();
+            });
+
+            // Live search
+            document.getElementById('admin_search_input').addEventListener('input', apply_filters);
+        }
+
+        // Initialize application on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            init_local_db();
+            init_auth();
+            init_skills_input();
+            init_file_inputs();
+            init_application_form();
+            init_change_status_form();
+            init_event_listeners();
+            populate_graduation_years();
+            load_draft();
+            
+            // Auto-save every 30 seconds
+            setInterval(() => {
+                if (current_step > 0 && !document.getElementById('application_form').classList.contains('hidden')) {
+                    save_draft();
+                }
+            }, 30000);
+        });
+    </script>
+</body>
+</html>
